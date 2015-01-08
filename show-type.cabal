@@ -1,6 +1,6 @@
 name: show-type
 category: Dependent Types
-version: 0.1
+version: 0.1.1
 license: BSD3
 license-file: LICENSE
 cabal-version: >= 1.10

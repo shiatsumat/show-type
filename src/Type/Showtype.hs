@@ -5,7 +5,7 @@
 
 module Type.Showtype (
     -- * Showtype
-    Showtype(showtype, showtypesPrec)
+    Showtype(showtype, showtypesPrec), printtype
   ) where
 
 import Data.Typeable
@@ -21,6 +21,9 @@ class Showtype (a :: k) where
   showtypesPrec :: Int -> proxy a -> String -> String
   showtype p = showtypesPrec 0 p ""
   showtypesPrec _ p s = showtype p ++ s
+
+printtype :: Showtype a => proxy a -> IO ()
+printtype = putStrLn . showtype
 
 instance Showtype False where
   showtype _ = "False"
@@ -146,52 +149,52 @@ instance (Showtype a, Showtype b, Showtype c, Showtype d, Showtype e, Showtype f
     showtype (Proxy :: Proxy i),
     showtype (Proxy :: Proxy j)]
 
-showtypeauto :: proxy a -> String
-showtypeauto = showtypeauto
-{-# INLINE showtypeauto #-}
+showtypesPrecAuto :: Typeable a => Int -> proxy a -> String -> String
+showtypesPrecAuto n p s = showsPrec n (typeRep p) s
+{-# INLINE showtypesPrecAuto #-}
 
 instance Typeable a => Showtype (a :: *) where
-  showtype = showtypeauto
+  showtypesPrec = showtypesPrecAuto
 instance Typeable a => Showtype (a :: k -> *) where
-  showtype = showtypeauto
+  showtypesPrec = showtypesPrecAuto
 instance Typeable a => Showtype (a :: k1 -> k2 -> *) where
-  showtype = showtypeauto
+  showtypesPrec = showtypesPrecAuto
 instance Typeable a => Showtype (a :: k1 -> k2 -> k3 -> *) where
-  showtype = showtypeauto
+  showtypesPrec = showtypesPrecAuto
 instance Typeable a => Showtype (a :: k1 -> k2 -> k3 -> k4 -> *) where
-  showtype = showtypeauto
+  showtypesPrec = showtypesPrecAuto
 instance Typeable a => Showtype (a :: k1 -> k2 -> k3 -> k4 -> k5 -> *) where
-  showtype = showtypeauto
+  showtypesPrec = showtypesPrecAuto
 instance Typeable a => Showtype (a :: k1 -> k2 -> k3 -> k4 -> k5 -> k6 -> *) where
-  showtype = showtypeauto
+  showtypesPrec = showtypesPrecAuto
 instance Typeable a => Showtype (a :: k1 -> k2 -> k3 -> k4 -> k5 -> k6 -> k7 -> *) where
-  showtype = showtypeauto
+  showtypesPrec = showtypesPrecAuto
 instance Typeable a => Showtype (a :: k1 -> k2 -> k3 -> k4 -> k5 -> k6 -> k7 -> k8 -> *) where
-  showtype = showtypeauto
+  showtypesPrec = showtypesPrecAuto
 instance Typeable a => Showtype (a :: k1 -> k2 -> k3 -> k4 -> k5 -> k6 -> k7 -> k8 -> k9 -> *) where
-  showtype = showtypeauto
+  showtypesPrec = showtypesPrecAuto
 instance Typeable a => Showtype (a :: k1 -> k2 -> k3 -> k4 -> k5 -> k6 -> k7 -> k8 -> k9 -> k10 -> *) where
-  showtype = showtypeauto
+  showtypesPrec = showtypesPrecAuto
 
 instance Typeable a => Showtype (a :: Constraint) where
-  showtype = showtypeauto
+  showtypesPrec = showtypesPrecAuto
 instance Typeable a => Showtype (a :: k -> Constraint) where
-  showtype = showtypeauto
+  showtypesPrec = showtypesPrecAuto
 instance Typeable a => Showtype (a :: k1 -> k2 -> Constraint) where
-  showtype = showtypeauto
+  showtypesPrec = showtypesPrecAuto
 instance Typeable a => Showtype (a :: k1 -> k2 -> k3 -> Constraint) where
-  showtype = showtypeauto
+  showtypesPrec = showtypesPrecAuto
 instance Typeable a => Showtype (a :: k1 -> k2 -> k3 -> k4 -> Constraint) where
-  showtype = showtypeauto
+  showtypesPrec = showtypesPrecAuto
 instance Typeable a => Showtype (a :: k1 -> k2 -> k3 -> k4 -> k5 -> Constraint) where
-  showtype = showtypeauto
+  showtypesPrec = showtypesPrecAuto
 instance Typeable a => Showtype (a :: k1 -> k2 -> k3 -> k4 -> k5 -> k6 -> Constraint) where
-  showtype = showtypeauto
+  showtypesPrec = showtypesPrecAuto
 instance Typeable a => Showtype (a :: k1 -> k2 -> k3 -> k4 -> k5 -> k6 -> k7 -> Constraint) where
-  showtype = showtypeauto
+  showtypesPrec = showtypesPrecAuto
 instance Typeable a => Showtype (a :: k1 -> k2 -> k3 -> k4 -> k5 -> k6 -> k7 -> k8 -> Constraint) where
-  showtype = showtypeauto
+  showtypesPrec = showtypesPrecAuto
 instance Typeable a => Showtype (a :: k1 -> k2 -> k3 -> k4 -> k5 -> k6 -> k7 -> k8 -> k9 -> Constraint) where
-  showtype = showtypeauto
+  showtypesPrec = showtypesPrecAuto
 instance Typeable a => Showtype (a :: k1 -> k2 -> k3 -> k4 -> k5 -> k6 -> k7 -> k8 -> k9 -> k10 -> Constraint) where
-  showtype = showtypeauto
+  showtypesPrec = showtypesPrecAuto
